@@ -1,0 +1,23 @@
+.wrapper_app {
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+
+  .app_sidebar {
+    background-color: #fff;
+    -webkit-box-shadow: 13px -2px 17px -12px rgba(41,50,66,.1);
+    box-shadow: 13px -2px 17px -12px rgba(41,50,66,.1);
+    height: 100%;
+    width: 100px;
+  }
+
+  .app_content {
+    width: calc(100% - 100px);
+    height: 100%;
+    padding: 25px;
+  }
+}
+
+span, a, li {
+  font-size: 13px;
+}

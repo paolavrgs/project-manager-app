@@ -1,0 +1,18 @@
+%p#notice= notice
+%p
+  %strong Title:
+  = @project.title
+%p
+  %strong Description:
+  = @project.description
+%p
+  %strong Techs:
+  - @project.techs.flatten.first.split(',').each do |tech|
+    %span.badge.badge-primary= tech
+%p
+  %strong Status:
+  = @project.status
+
+= link_to 'Edit', edit_project_path(@project)
+|
+= link_to 'Back', projects_path

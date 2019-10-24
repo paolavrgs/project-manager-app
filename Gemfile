@@ -5,8 +5,6 @@ ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
-# Admin
-gem 'rails_admin', '2.0'
 # Use psql as the database for Active Record
 gem 'pg', '0.18.4'
 # Use Puma as the app server
@@ -19,7 +17,10 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 
 gem 'haml', '5.1'
+gem 'haml-rails', '~> 2.0', '>= 2.0.1'
 gem 'aasm', '5.0'
+gem 'mini_magick', '4.9.5'
+gem 'image_magick', '0.1.9'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
