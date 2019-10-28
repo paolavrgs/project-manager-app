@@ -1,35 +1,39 @@
-= form_with(model: project, local: true) do |form|
-  - if project.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(project.errors.count, "error")
-        prohibited this project from being saved:
-      %ul
-        - project.errors.full_messages.each do |message|
-          %li= message
-  .field
-    = form.label :title
-    = form.text_field :title
-  .field
-    = form.label :description
-    = form.text_field :description
-  .field
-    = form.label :techs
-    = form.text_field :techs, data: {role: 'tagsinput'},  multiple: true
-  .field
-    = form.label :status
-    = form.text_field :status
-  .field
-    = form.label :start_date
-    = form.date_field :start_date
-  .field
-    = form.label :due_date
-    = form.date_field :due_date
-  .field
-    = form.label :logo_image
-    = form.file_field :logo_image
-  .field
-    = form.label :files
-    = form.file_field :files, multiple: true
-  .actions
-    = form.submit
+.container
+  .row
+    .col-lg-12
+      .project_card
+        = form_with(model: project, local: true) do |form|
+          - if project.errors.any?
+            #error_explanation
+              %h2
+                = pluralize(project.errors.count, "error")
+                prohibited this project from being saved:
+              %ul
+                - project.errors.full_messages.each do |message|
+                  %li= message
+          .form-group
+            = form.label :title
+            = form.text_field :title, class: 'form-control'
+          .form-group
+            = form.label :description
+            = form.text_field :description, class: 'form-control'
+          .form-group
+            = form.label :techs
+            = form.text_field :techs, class: 'form-control'
+          .form-group
+            = form.label :status
+            = form.text_field :status, class: 'form-control'
+          .form-group
+            = form.label :start_date
+            = form.date_field :start_date, class: 'form-control'
+          .form-group
+            = form.label :due_date
+            = form.date_field :due_date, class: 'form-control'
+          .form-group
+            = form.label :logo_image
+            = form.file_field :logo_image
+          .form-group
+            = form.label :files
+            = form.file_field :files, multiple: true
+          .actions
+            = form.submit 'Crear proyecto', class: 'btn btn-custom btn-sm'

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @developer.name
+%p
+  %b Level:
+  = @developer.level
+%p
+  %b Techs:
+  = @developer.techs
+
+= link_to 'Edit', edit_developer_path(@developer)
+\|
+= link_to 'Back', developers_path

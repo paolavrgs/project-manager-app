@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @requirement = @project.requirements
   end
 
   # GET /projects/new
@@ -70,6 +71,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:title, :description, :status, :logo_image, :files, :start_date, :due_date, :techs => [])
+      params.require(:project).permit(:title, :description, :status, :start_date, :due_date, :logo_image, :files => [], :techs => [], requirements_attributes: [:id, :title, :hours, :_destroy])
     end
 end

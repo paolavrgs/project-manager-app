@@ -1,21 +1,30 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
     %title ProjectManagerApp
     = csrf_meta_tags
     = csp_meta_tag
-    %link{:href => "https://fonts.googleapis.com/css?family=Poppins&display=swap", :rel => "stylesheet"}/
-    %link{:href => "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", :rel => "stylesheet"}/
-    %link{crossorigin: "anonymous", href: "https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css", integrity: "sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv", rel: "stylesheet"}/
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    %script{src: "https://use.fontawesome.com/70a3cb5d53.js"}
-    %script{:src => "https://code.jquery.com/jquery-3.3.1.slim.min.js"}
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"}
-    %script{:src => "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"}
+    %link{ href: "https://fonts.googleapis.com/css?family=Poppins&display=swap", rel: "stylesheet" }
+    %link{ href: "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", rel: "stylesheet" }
+    -# %link{ href: "assets/application.css" }
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    %script{ src: "https://use.fontawesome.com/70a3cb5d53.js" }
+    %script{ src: "https://code.jquery.com/jquery-3.3.1.slim.min.js" }
+    %script{ src: "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" }
+    %script{ src: "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" }
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     %section.wrapper_app
       .app_sidebar
+        .text-center
+          %img.sidebar_logo{ src: '/assets/logo_slice_blanco.png' }
+        %ul
+          %li
+            %i.fa.fa-folder-open-o
+            %a{ href: '/projects' } Proyectos
+          %li
+            %i.fa.fa-group
+            %a{ href: '/developers' } Desarrolladores
       .app_content
         = yield

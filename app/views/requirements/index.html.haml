@@ -1,0 +1,23 @@
+%h1 Listing requirements
+
+%table
+  %thead
+    %tr
+      %th Title
+      %th Hours
+      %th
+      %th
+      %th
+
+  %tbody
+    - @requirements.each do |requirement|
+      %tr
+        %td= requirement.title
+        %td= requirement.hours
+        %td= link_to 'Show', requirement
+        %td= link_to 'Edit', edit_requirement_path(requirement)
+        %td= link_to 'Destroy', requirement, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Requirement', new_requirement_path

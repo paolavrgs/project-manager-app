@@ -2,22 +2,54 @@
   height: 100vh;
   font-family: 'Poppins', sans-serif;
   display: flex;
+  overflow: hidden;
 
   .app_sidebar {
-    background-color: #fff;
+    background-color: $dark;
     -webkit-box-shadow: 13px -2px 17px -12px rgba(41,50,66,.1);
     box-shadow: 13px -2px 17px -12px rgba(41,50,66,.1);
     height: 100%;
-    width: 100px;
+    width: 20%;
+    padding: 10px;
+
+    ul {
+      padding-left: 0;
+    }
+
+    a, li {
+      color: #868e96;
+      font-size: 14px;
+      list-style: none;
+      letter-spacing: .6px;
+    }
+
+    li {
+      margin: 20px 15px;
+    }
+
+    .sidebar_logo {
+      width: 120px;
+    }
   }
 
   .app_content {
-    width: calc(100% - 100px);
+    width: 80%;
     height: 100%;
     padding: 25px;
+    background-color: #f9f9fc;
+    overflow-y: scroll;
   }
 }
 
 span, a, li {
   font-size: 13px;
+}
+
+.btn-custom {
+  background-color: $primary;
+  border-color: $primary;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 6px 12px;
 }

@@ -1,18 +1,81 @@
 %p#notice= notice
-%p
-  %strong Title:
-  = @project.title
-%p
-  %strong Description:
-  = @project.description
-%p
-  %strong Techs:
-  - @project.techs.flatten.first.split(',').each do |tech|
-    %span.badge.badge-primary= tech
-%p
-  %strong Status:
-  = @project.status
+-# %p
+-#   %strong Title:
+-#   = @project.title
+-# %p
+-#   %strong Description:
+-#   = @project.description
+-# %p
+-#   %strong Techs:
+-#   - @project.techs.flatten.first.split(',').each do |tech|
+-#     %span.badge.badge-primary= tech
+-# %p
+-#   %strong Status:
+-#   = @project.status
 
-= link_to 'Edit', edit_project_path(@project)
-|
+-# = link_to 'Edit', edit_project_path(@project)
+-# |
+-# %p#notice= notice
+%h4 Projects
 = link_to 'Back', projects_path
+.container
+  .row
+    .col-lg-12
+      .project_card
+        .project_card-header
+          .project_card-label
+            .project_card-media
+              %span.media-circle
+                = image_tag(@project.logo_image) if @project.logo_image.attached?
+            .project_card-info
+              = link_to @project, class: 'project_card-title' do
+                = @project.title
+          .project_card-actions
+            = link_to 'Editar', edit_project_path(@project), class: 'btn btn-custom btn-sm'
+            = link_to 'Eliminar', @project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-custom btn-sm'
+        .project_card-body
+          .body-stats
+            .body-item
+              %span.body-item-span Start Date
+              .body-label.start-date
+                %span= @project.start_date.strftime('%d %b, %y')
+            .body-item
+              %span.body-item-span Due Date
+              .body-label.due-date
+                %span= @project.due_date.strftime('%d %b, %y')
+            .body-item.flex-fill
+              %span Progress
+              .d-flex.align-items-center
+                .progress{style: "height: 5px;width: 100%;"}
+                  .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: 78%;"}
+                %span
+                  78%
+          .project_card-desc
+            %span= @project.description
+        .project_card-footer
+          %i.fa.fa-book
+          %span
+            = @project.requirements.count
+            Requerimientos
+    .col-lg-12
+      .project_card
+        %i.fa.fa-files-o
+        %h5 Archivos
+        - @project.files.each do |file|
+          %a{href:"#{rails_blob_url(file)}"} Archivos
+    .col-lg-12
+      .project_card
+        %i.fa.fa-list-ul
+        %h5 Requerimientos
+        = form_for @project do |f|
+          #requirements
+            = f.fields_for :requirements do |requirement|
+              = render 'requirement_fields', f: requirement
+            .links
+              = link_to_add_association 'add requirement', f, :requirements
+          = f.submit
+        %ul
+          - @project.requirements.each do |req|
+            %li
+              = req.title
+              = link_to 'Destroy', req, method: :delete, data: { confirm: 'Are you sure?' }

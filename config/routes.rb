@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :developers
+  resources :requirements
   resources :tasks
   resources :projects
   get '/', to: 'application#index', as: :root

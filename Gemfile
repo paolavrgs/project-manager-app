@@ -21,6 +21,7 @@ gem 'haml-rails', '~> 2.0', '>= 2.0.1'
 gem 'aasm', '5.0'
 gem 'mini_magick', '4.9.5'
 gem 'image_magick', '0.1.9'
+gem 'cocoon'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

@@ -1,0 +1,25 @@
+%h1 Listing developers
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Level
+      %th Techs
+      %th
+      %th
+      %th
+
+  %tbody
+    - @developers.each do |developer|
+      %tr
+        %td= developer.name
+        %td= developer.level
+        %td= developer.techs
+        %td= link_to 'Show', developer
+        %td= link_to 'Edit', edit_developer_path(developer)
+        %td= link_to 'Destroy', developer, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Developer', new_developer_path

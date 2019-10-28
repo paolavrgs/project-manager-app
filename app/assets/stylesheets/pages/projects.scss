@@ -1,31 +1,23 @@
 .project_card {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  padding: 25px;
+  @include flexbox();
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-shadow: 0 0 13px 0 rgba(82,63,105,.05);
+  @include flex-direction(column);
   box-shadow: 0 0 13px 0 rgba(82,63,105,.05);
-  background-color: #fff;
+  background-color: $white;
   margin-bottom: 20px;
   border-radius: 4px;
 }
 
 .project_card-header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  padding: 25px;
+  @include flexbox();
+  @include flex-wrap(wrap);
+  @include justify-content(space-between);
+  padding: 25px 0;
 
   .project_card-label {
     display: flex;
@@ -33,12 +25,14 @@
   }
 
   .project_card-info {
-    display: flex;
-    flex-direction: column;
+    @include flexbox();
+    @include flex-direction(column);
     margin-left: 20px;
   }
 
   .project_card-toolbar {
+    @include flexbox();
+    @include align-items(center);
     .dropdown-menu {
       box-shadow: 0 0 50px 0 rgba(82,63,105,.15);
       border-radius: 4px;
@@ -62,6 +56,10 @@
   }
 }
 
+.project_card-desc {
+  padding: 25px 0;
+}
+
 .media-circle {
   border-radius: 50%;
 
@@ -74,33 +72,42 @@
 
 
 .project_card-body {
-  padding: 25px;
+  padding: 25px 0;
+}
 
-  .body-stats {
-    display: flex;
+.body-stats {
+  display: flex;
 
-    .body-item {
-      padding: 0 5px;
-      .body-item-span {
-        color: #595d6e;
-        font-weight: 600;
-        padding-bottom: 12px;
-        display: block;
-      }
-    }
-
-    .start-date {
-      background-color: rgba(34,185,255,.1);
-      color: #22b9ff;
-      padding: 6px 12px;
-      border-radius: 4px;
-    }
-
-    .due-date {
-      background-color: rgba(253,39,235,.1);
-      color: #fd27eb;
-      padding: 6px 12px;
-      border-radius: 4px;
+  .body-item {
+    padding: 0 5px;
+    .body-item-span {
+      color: #595d6e;
+      font-weight: 600;
+      padding-bottom: 12px;
+      display: block;
     }
   }
+
+  .start-date {
+    background-color: rgba(34,185,255,.1);
+    color: #22b9ff;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+
+  .due-date {
+    background-color: rgba(253,39,235,.1);
+    color: #fd27eb;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+}
+
+.project_card-footer {
+  border-top: 1px solid #ebedf2;
+  padding: 25px 0;
+  @include flexbox();
+  @include flex-wrap(wrap);
+  @include justify-content(space-between);
+  @include align-items(center);
 }

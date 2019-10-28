@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_23_214537) do
+ActiveRecord::Schema.define(version: 2019_10_24_223104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 2019_10_23_214537) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "developers", force: :cascade do |t|
+    t.string "name"
+    t.string "level"
+    t.string "techs", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -47,13 +55,26 @@ ActiveRecord::Schema.define(version: 2019_10_23_214537) do
     t.string "techs", default: [], array: true
   end
 
+  create_table "requirements", force: :cascade do |t|
+    t.string "title"
+    t.integer "hours"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_requirements_on_project_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.string "priority"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "requirement_id"
+    t.index ["requirement_id"], name: "index_tasks_on_requirement_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "requirements", "projects"
+  add_foreign_key "tasks", "requirements"
 end
