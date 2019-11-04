@@ -28,6 +28,12 @@
     @include flexbox();
     @include flex-direction(column);
     margin-left: 20px;
+
+    .project_card-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: $dark;
+    }
   }
 
   .project_card-toolbar {
@@ -89,15 +95,15 @@
   }
 
   .start-date {
-    background-color: rgba(34,185,255,.1);
-    color: #22b9ff;
+    background-color: rgba(green,.2);
+    color: $dark;
     padding: 6px 12px;
     border-radius: 4px;
   }
 
   .due-date {
-    background-color: rgba(253,39,235,.1);
-    color: #fd27eb;
+    background-color: rgba(red,.2);
+    color: $dark;
     padding: 6px 12px;
     border-radius: 4px;
   }

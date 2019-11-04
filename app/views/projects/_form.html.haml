@@ -19,7 +19,11 @@
             = form.text_field :description, class: 'form-control'
           .form-group
             = form.label :techs
-            = form.text_field :techs, class: 'form-control'
+            -# = form.text_field :techs, class: 'form-control'
+            = form.collection_check_boxes(:techs, { 'Rails': 'Rails', 'PHP': 'PHP', 'Wordpress': 'Wordpress' }, :last, :first) do |b|
+              .form-check.form-check-inline
+                = b.check_box class: 'form-check-input'
+                = b.label class: 'form-check-label'
           .form-group
             = form.label :status
             = form.text_field :status, class: 'form-control'
