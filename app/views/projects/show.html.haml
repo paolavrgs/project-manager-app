@@ -1,22 +1,4 @@
 %p#notice= notice
--# %p
--#   %strong Title:
--#   = @project.title
--# %p
--#   %strong Description:
--#   = @project.description
--# %p
--#   %strong Techs:
--#   - @project.techs.flatten.first.split(',').each do |tech|
--#     %span.badge.badge-primary= tech
--# %p
--#   %strong Status:
--#   = @project.status
-
--# = link_to 'Edit', edit_project_path(@project)
--# |
--# %p#notice= notice
--# %h4 Projects
 = link_to 'Back', projects_path
 .container
   .row
@@ -73,8 +55,9 @@
         %ul
           - @project.requirements.each do |req|
             %li
-              = req.title
-              = link_to 'Destroy', req, method: :delete, data: { confirm: 'Are you sure?' }
+              = link_to req.title, req
+              = link_to req, method: :delete, data: { confirm: 'Are you sure?' } do
+                %i.fa.fa-trash
         = form_for @project do |f|
           #requirements
             = f.fields_for :requirements do |requirement|

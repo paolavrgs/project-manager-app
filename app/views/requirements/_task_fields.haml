@@ -1,0 +1,8 @@
+.nested-fields
+  %label Tarea
+  = f.text_field :title, class: 'form-control'
+  %label Prioridad
+  = f.text_field :priority, class: 'form-control'
+  %label Descripción
+  = f.text_field :description, class: 'form-control'
+  = link_to_remove_association "remove task", f

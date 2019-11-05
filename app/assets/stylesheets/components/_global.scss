@@ -38,6 +38,12 @@
     padding: 25px;
     background-color: #f9f9fc;
     overflow-y: scroll;
+
+    .app_content-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 25px;
+    }
   }
 }
 

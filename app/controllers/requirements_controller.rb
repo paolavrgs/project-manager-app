@@ -10,6 +10,7 @@ class RequirementsController < ApplicationController
   # GET /requirements/1
   # GET /requirements/1.json
   def show
+    @task = @requirement.tasks
   end
 
   # GET /requirements/new
@@ -69,6 +70,6 @@ class RequirementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def requirement_params
-      params.require(:requirement).permit(:title, :hours, :project_id)
+      params.require(:requirement).permit(:title, :hours, :project_id, tasks_attributes: [:id, :title, :priority, :description, :_destroy])
     end
 end

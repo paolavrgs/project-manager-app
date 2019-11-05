@@ -1,6 +1,6 @@
--# %p#notice= notice
-%h4 Projects
-= link_to 'Nuevo proyecto', new_project_path, class: 'btn btn-custom btn-sm'
+.app_content-header
+  %h4 Proyectos
+  = link_to 'Nuevo proyecto', new_project_path, class: 'btn btn-custom btn-sm'
 .container
   .row
     - @projects.each do |project|
@@ -27,8 +27,6 @@
                     = link_to project, method: :delete, data: { confirm: 'Are you sure?' } do
                       %i.fa.fa-trash
                       %span Eliminar
-          .project_card-desc
-            %span= project.description.truncate(120)
           .project_card-body
             .body-stats
               .body-item
@@ -47,4 +45,9 @@
                   %span
                     78%
           .project_card-footer
-            = link_to 'Detalles', project, class: 'btn btn-custom btn-sm'
+            .members-avatar
+              .avatar-img{ "data-toggle"=>"tooltip", "data-placement"=>"bottom", title: "John Doe" }
+                %img{ src: 'http://dashboards.webkom.co/jquery/sumea/assets/img/avatars/46.jpg' }
+              .avatar-img{ "data-toggle"=>"tooltip", "data-placement"=>"bottom", title: "Jane Doe" }
+                %img{ src: 'http://dashboards.webkom.co/jquery/sumea/assets/img/avatars/16.jpg' }
+            = link_to 'Ver +', project, class: 'btn btn-custom btn-sm'

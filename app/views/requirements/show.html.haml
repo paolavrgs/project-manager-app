@@ -7,6 +7,37 @@
   %b Hours:
   = @requirement.hours
 
+#open.btn.btn-custom Agregar tarea +
+#close.btn.btn-custom{style:'display:none'} Cerrar
+%ul
+  - @requirement.tasks.each do |task|
+    %li
+      = link_to task.title, task
+      = link_to task, method: :delete, data: { confirm: 'Are you sure?' } do
+        %i.fa.fa-trash
+= form_for @requirement do |f|
+  #tasks
+    = f.fields_for :tasks do |task|
+      = render 'task_fields', f: task
+    .links
+      = link_to_add_association 'add task', f, :tasks
+    = f.submit
+
 = link_to 'Edit', edit_requirement_path(@requirement)
 \|
 = link_to 'Back', requirements_path
+:javascript
+  $("#open").click(function () {
+      $("#tasks").show("slow");
+      $("#open").css('display','none');
+      $("#close").css('display','block');
+  });
+  $("#close").click(function () {
+      $("#tasks").hide("slow");
+      $("#close").css('display','none');
+      $("#open").css('display','block');
+  });
+:css
+  #tasks {
+    display: none;
+  }
