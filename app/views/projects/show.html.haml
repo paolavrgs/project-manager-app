@@ -12,6 +12,7 @@
             .project_card-info
               = link_to @project, class: 'project_card-title' do
                 = @project.title
+              %span.badge.badge-warning= @project.status
           .project_card-actions
             = link_to 'Editar', edit_project_path(@project), class: 'btn btn-custom btn-sm'
             = link_to 'Eliminar', @project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-custom btn-sm'
@@ -36,7 +37,7 @@
             %span= @project.description
         .project_card-footer
           .project_card-footer-item
-            %i.fa.fa-book
+            %i.fa.fa-list
             %span
               = @project.requirements.count
               Requerimientos
