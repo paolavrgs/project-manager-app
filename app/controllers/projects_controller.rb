@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: %i[show edit update destroy update_state]
   layout 'layouts/application'
 
   # GET /projects
@@ -63,14 +63,29 @@ class ProjectsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
+  def update_state
+    state_method = params[:project][:transition_to]
+    @project.try(state_method)
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+        format.json { render :show, status: :created, location: @project }
+      else
+        format.html { render :new }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def project_params
-      params.require(:project).permit(:title, :description, :status, :start_date, :due_date, :logo_image, :files => [], :techs => [], requirements_attributes: [:id, :title, :hours, :_destroy])
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def project_params
+    params.require(:project).permit(:title, :description, :status, :start_date, :due_date, :logo_image, :files => [], :techs => [], requirements_attributes: [:id, :title, :hours, :_destroy])
+  end
 end

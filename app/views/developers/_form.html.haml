@@ -14,6 +14,9 @@
     = f.text_field :level
   .field
     = f.label :techs
-    = f.text_field :techs
+    = f.collection_check_boxes(:techs, Technology::AVAILABLES, :first, :last) do |opt|
+      .form-check.form-check-inline
+        = opt.check_box class: 'form-check-input', checked: f.object.techs.include?(opt.object&.first&.to_s)
+        = opt.label class: 'form-check-label'
   .actions
     = f.submit 'Save'

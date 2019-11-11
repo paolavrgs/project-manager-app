@@ -16,6 +16,18 @@
           .project_card-actions
             = link_to 'Editar', edit_project_path(@project), class: 'btn btn-custom btn-sm'
             = link_to 'Eliminar', @project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-custom btn-sm'
+            .dropdown
+              %button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                Transition to
+              .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
+                - @project.possible_transitions.each do |state|
+                  %a.dropdown-item.change-state{href: '#!', 'data-form' => "form#{state.capitalize}"}
+                    = state&.capitalize
+                    .hidden
+                      = form_for @project, url: "/projects/#{@project.id}/update_state", html: { id: "form#{state.capitalize}" } do |form|
+                        = form.text_field "transition_to", value: "to_#{state}"
+                        = form.submit
+
         .project_card-body
           .body-stats
             .body-item
@@ -76,17 +88,29 @@
         - @project.files.each do |file|
           %a{href:"#{rails_blob_url(file)}"} Archivos
 :javascript
-  $("#open").click(function () {
-      $("#requirements").show("slow");
-      $("#open").css('display','none');
-      $("#close").css('display','block');
-  });
-  $("#close").click(function () {
-      $("#requirements").hide("slow");
-      $("#close").css('display','none');
-      $("#open").css('display','block');
-  });
+  $(document).ready(function() {
+    $("#open").click(function () {
+        $("#requirements").show("slow");
+        $("#open").css('display','none');
+        $("#close").css('display','block');
+    });
+    $("#close").click(function () {
+        $("#requirements").hide("slow");
+        $("#close").css('display','none');
+        $("#open").css('display','block');
+    });
+
+    // Submit form when dropdown option is clicked
+    $('.change-state').click(function (e) {
+      let formId = e.target.getAttribute('data-form');
+
+      $('#' + formId).submit();
+    })
+  })
 :css
   #requirements {
+    display: none;
+  }
+  .hidden {
     display: none;
   }
