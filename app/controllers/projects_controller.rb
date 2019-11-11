@@ -71,8 +71,8 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :created, location: @project }
       else
-        format.html { render :new }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.html { render :show }
+        format.json { render json: @project.errors }
       end
     end
   end
@@ -86,6 +86,10 @@ class ProjectsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def project_params
-    params.require(:project).permit(:title, :description, :status, :start_date, :due_date, :logo_image, :files => [], :techs => [], requirements_attributes: [:id, :title, :hours, :_destroy])
+    params.require(:project).permit(
+      :title, :description, :status, :start_date,
+      :due_date, :logo_image, files: [], techs: [],
+      requirements_attributes: [:id, :title, :hours, :_destroy]
+    )
   end
 end
