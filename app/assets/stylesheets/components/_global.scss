@@ -5,11 +5,11 @@
   overflow: hidden;
 
   .app_sidebar {
-    background-color: $dark;
+    background-color: $blue;
     -webkit-box-shadow: 13px -2px 17px -12px rgba(41,50,66,.1);
     box-shadow: 13px -2px 17px -12px rgba(41,50,66,.1);
     height: 100%;
-    width: 20%;
+    width: 15%;
     padding: 10px;
 
     ul {
@@ -17,7 +17,7 @@
     }
 
     a, li {
-      color: #868e96;
+      color: #fff;
       font-size: 14px;
       list-style: none;
       letter-spacing: .6px;
@@ -33,7 +33,7 @@
   }
 
   .app_content {
-    width: 80%;
+    width: 85%;
     height: 100%;
     padding: 25px;
     background-color: #f9f9fc;
