@@ -1,5 +1,5 @@
 .project_card {
-  padding: 25px;
+  padding: 20px;
   @include flexbox();
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
@@ -8,16 +8,17 @@
   -webkit-box-direction: normal;
   @include flex-direction(column);
   box-shadow: 0 0 13px 0 rgba(82,63,105,.05);
-  border: 1px solid rgba(82,63,105,.2);
+  // border: 1px solid rgba(82,63,105,.2);
   background-color: $white;
   margin-bottom: 20px;
-  border-radius: 4px;
+  border-radius: $radius;
 }
 
 .project_card-header {
   @include flexbox();
   @include flex-wrap(wrap);
   @include justify-content(space-between);
+  margin-bottom: 20px;
 
   .project_card-label {
     display: flex;
@@ -27,10 +28,10 @@
   .project_card-info {
     @include flexbox();
     @include flex-direction(column);
-    margin-left: 20px;
 
     .project_card-title {
-      font-size: 20px;
+      font-size: 15px;
+      text-transform: uppercase;
       font-weight: 600;
       color: $dark;
     }
@@ -41,7 +42,7 @@
     @include align-items(center);
     .dropdown-menu {
       box-shadow: 0 0 50px 0 rgba(82,63,105,.15);
-      border-radius: 4px;
+      border-radius: $radius;
       border: 0;
       padding: 12px;
     }
@@ -68,6 +69,7 @@
 
 .media-circle {
   border-radius: 50%;
+  margin-right: 20px;
 
   img {
     width: 65px;
@@ -85,7 +87,7 @@
   display: flex;
 
   .body-item {
-    padding: 0 5px;
+    padding-right: 10px;
     .body-item-span {
       color: #595d6e;
       font-weight: 600;
@@ -98,14 +100,14 @@
     background-color: rgba(green,.2);
     color: $dark;
     padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: $radius;
   }
 
   .due-date {
     background-color: rgba(red,.2);
     color: $dark;
     padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: $radius;
   }
 }
 
@@ -134,5 +136,94 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+  }
+}
+
+.styled-checkbox {
+  position: absolute; // take it out of document flow
+  opacity: 0; // hide it
+
+  & + label {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  // Box.
+  & + label:before {
+    content: '';
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 20px;
+    height: 20px;
+    border-radius: $radius;
+    background: #9c9c9c;
+  }
+
+  // Box hover
+  &:hover + label:before {
+    background: $primary;
+  }
+  
+  // Box focus
+  &:focus + label:before {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+  }
+
+  // Box checked
+  &:checked + label:before {
+    background: $primary;
+  }
+  
+  // Disabled state label.
+  &:disabled + label {
+    color: #b8b8b8;
+    cursor: auto;
+  }
+
+  // Disabled box.
+  &:disabled + label:before {
+    box-shadow: none;
+    background: #ddd;
+  }
+
+  // Checkmark. Could be replaced with an image
+  &:checked + label:after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 9px;
+    background: white;
+    width: 2px;
+    height: 2px;
+    box-shadow: 
+      2px 0 0 white,
+      4px 0 0 white,
+      4px -2px 0 white,
+      4px -4px 0 white,
+      4px -6px 0 white,
+      4px -8px 0 white;
+    transform: rotate(45deg);
+  }
+}
+
+.accordion {
+
+  .card-header {
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-body {
+    padding: 20px;
+
+    ul {
+      margin-bottom: 0;
+      padding-left: 30px;
+    }
   }
 }
