@@ -1,7 +1,7 @@
 .app_content-header
   %h4 Desarrolladores
   = link_to 'Nuevo desarrollador', new_developer_path, class: 'btn btn-custom btn-sm'
-.container
+.container-fluid
   .row
     - @developers.each do |dev|
       .col-lg-4
