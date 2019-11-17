@@ -8,8 +8,14 @@ $breakpoints: (
 ) !default;
 
 // Fonts
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap');
+
 $pop: 'Poppins', sans-serif;
+$ubuntu: 'Ubuntu', sans-serif;
 $white: #fff;
-$gray: #373741;
 $dark: #252525;
+$link: #3f4257;
 $primary: #dd6b2c;
+
+$radius: 8px;

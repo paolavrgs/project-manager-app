@@ -1,8 +1,11 @@
 %p#notice= notice
-= link_to 'Back', projects_path
-.container
+.app_content-header
+  = link_to projects_path do
+    %i.fa.fa-chevron-left
+    Volver
+.container-fluid
   .row
-    .col-lg-12
+    .col-lg-5
       .project_card
         .project_card-header
           .project_card-label
@@ -12,11 +15,27 @@
             .project_card-info
               = link_to @project, class: 'project_card-title' do
                 = @project.title
-              %span.badge.badge-warning= @project.status
+              %span.badge.badge_custom.red= @project.status
+              .dropdown
+                %button#dropdownMenuButton.btn.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                  Transition to
+                .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
+                  - @project.possible_transitions.each do |state|
+                    %a.dropdown-item.change-state{href: '#!', 'data-form' => "form#{state.capitalize}"}
+                      = state&.capitalize
+                      .hidden
+                        = form_for @project, url: "/projects/#{@project.id}/update_state", html: { id: "form#{state.capitalize}" } do |form|
+                          = form.text_field "transition_to", value: "to_#{state}"
+                          = form.submit
           .project_card-actions
-            = link_to 'Editar', edit_project_path(@project), class: 'btn btn-custom btn-sm'
-            = link_to 'Eliminar', @project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-custom btn-sm'
+            = link_to edit_project_path(@project) do
+              %i.fa.fa-pencil
+            = link_to @project, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
+              %i.fa.fa-trash
         .project_card-body
+          .mb-3
+            - @project.techs.each do |tech|
+              %span.badge.badge-primary= tech
           .body-stats
             .body-item
               %span.body-item-span Inicio
@@ -26,39 +45,86 @@
               %span.body-item-span Entrega
               .body-label.due-date
                 %span= @project.due_date.strftime('%d %b, %y')
-            .body-item.flex-fill
-              %span Progreso
-              .d-flex.align-items-center
-                .progress{style: "height: 5px;width: 100%;"}
-                  .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: 78%;"}
-                %span
-                  78%
+          .flex-fill.mt-3
+            %span Progreso
+            .d-flex.align-items-center
+              .progress{style: "height: 5px;width: 100%;"}
+                .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: 78%;"}
+              %span
+                78%
           .project_card-desc
             %span= @project.description
-        .project_card-footer
-          .project_card-footer-item
-            %i.fa.fa-list
-            %span
-              = @project.requirements.count
-              Requerimientos
-          .project_card-footer-item
-            - @project.techs.each do |tech|
-              %span.badge.badge-primary= tech
-    .col-lg-12
+
       .project_card
         .project_card-header
           .project_card-label
-            %i.fa.fa-list-ul
             .project_card-info
-              %h5 Requerimientos
+              %h5
+                %i.fa.fa-list-ul
+                Desarrolladores
+        .content
+          %select#js-example
+    
+      .project_card
+        .project_card-header
+          .project_card-label
+            .project_card-info
+              %h5
+                %i.fa.fa-files-o
+                Archivos
+        - @project.files.each do |file|
+          .list-file
+            .list-file-thumb
+              %i.fa.fa-file-pdf-o
+              %h6
+                %a{href:"#{rails_blob_url(file)}"} filename
+            %a(href="")
+              %i.fa.fa-download
+
+    .col-lg-7
+      .project_card
+        .project_card-header
+          .project_card-label
+            .project_card-info
+              %h5
+                %i.fa.fa-list-ul
+                Requerimientos
           #open.btn.btn-custom Agregar +
           #close.btn.btn-custom{style:'display:none'} Cerrar
-        %ul
-          - @project.requirements.each do |req|
-            %li
-              = link_to req.title, req
-              = link_to req, method: :delete, data: { confirm: 'Are you sure?' } do
-                %i.fa.fa-trash
+        #requirementsAccordion.accordion
+          - @project.requirements.each_with_index do |req, x|
+            .card
+              - if req.tasks.empty?
+                .card-header
+                  %button.btn.btn-link
+                    %input#req-1.styled-checkbox{type: "checkbox"}
+                    %label{ for: "req-1"}= req.title
+                  .card-header-actions
+                    = link_to edit_requirement_path(req) do
+                      %i.fa.fa-pencil
+                    = link_to req, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
+                      %i.fa.fa-trash
+              - else
+                .card-header{"aria-controls" => "collapse-#{req.id}", "aria-expanded" => "#{ x == 0 ? "true" : "false"}", "data-target" => "#collapse-#{req.id}", "data-toggle" => "collapse"}
+                  %button.btn.btn-link
+                    = req.title
+                  .card-header-actions
+                    = link_to edit_requirement_path(req) do
+                      %i.fa.fa-pencil
+                    = link_to req, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
+                      %i.fa.fa-trash
+              .collapse{class: "#{ x == 0 ? "show" : ""}", "data-parent" => "#requirementsAccordion", id: "collapse-#{req.id}"}
+                .card-body
+                  %ul
+                    - req.tasks.each do |task|
+                      %li.d-flex.justify-content-between
+                        .task-title
+                          %input#task-1.styled-checkbox{type: "checkbox"}
+                          %label{ for: "task-1"}= task.title
+                        .task-priority
+                          %span.badge.badge_custom.red BAJA
+
+
         = form_for @project do |f|
           #requirements
             = f.fields_for :requirements do |requirement|
@@ -66,27 +132,44 @@
             .links
               = link_to_add_association 'add requirement', f, :requirements
             = f.submit
-    .col-lg-12
-      .project_card
-        .project_card-header
-          .project_card-label
-            %i.fa.fa-files-o
-            .project_card-info
-              %h5 Archivos
-        - @project.files.each do |file|
-          %a{href:"#{rails_blob_url(file)}"} Archivos
 :javascript
-  $("#open").click(function () {
-      $("#requirements").show("slow");
-      $("#open").css('display','none');
-      $("#close").css('display','block');
-  });
-  $("#close").click(function () {
-      $("#requirements").hide("slow");
-      $("#close").css('display','none');
-      $("#open").css('display','block');
-  });
+  $(document).ready(function() {
+    $("#open").click(function () {
+        $("#requirements").show("slow");
+        $("#open").css('display','none');
+        $("#close").css('display','block');
+    });
+    $("#close").click(function () {
+        $("#requirements").hide("slow");
+        $("#close").css('display','none');
+        $("#open").css('display','block');
+    });
+
+    // Submit form when dropdown option is clicked
+    $('.change-state').click(function (e) {
+      let formId = e.target.getAttribute('data-form');
+
+      $('#' + formId).submit();
+    })
+
+    // select2
+    $('#js-example').select2({
+      data: [
+        {
+          name: 'Enmanuel'
+        }
+      ]
+    });
+  })
 :css
   #requirements {
     display: none;
+  }
+  .hidden {
+    display: none;
+  }
+
+:scss
+  .select2 {
+    width: 94.6% !important;
   }

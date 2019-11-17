@@ -1,4 +1,8 @@
 .nested-fields
-  = f.text_field :title, class: 'form-control'
-  = f.text_field :hours, class: 'form-control'
-  = link_to_remove_association "remove task", f
+  .form-group
+    = f.label :title
+    = f.text_field :title, class: 'form-control'
+    = f.label :hours
+    = f.text_field :hours, class: 'form-control'
+    = f.check_box :status
+    = link_to_remove_association "remove task", f
