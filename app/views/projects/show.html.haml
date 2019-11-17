@@ -63,8 +63,12 @@
                 %i.fa.fa-list-ul
                 Desarrolladores
         .content
-          - @project.developers.each do |dev|
-            = dev.name
+          .row
+            - @project.developers.each do |dev|
+              .col-lg
+                .card
+                  .card-body
+                    = dev.name
         .content
           = form_for @project, method: :put do |form|
             = form.select(:developer_ids, @developers.map{|dev| ["#{dev&.name} - #{dev&.level}", dev.id]}, {}, { multiple: true })
