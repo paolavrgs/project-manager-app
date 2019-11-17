@@ -29,12 +29,17 @@
     @include flexbox();
     @include flex-direction(column);
 
-    .project_card-title {
-      font-size: 15px;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: $dark;
+    h5 {
+      font-size: 18px;
     }
+  }
+
+  .project_card-title {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: $dark;
+    margin-bottom: 5px;
   }
 
   .project_card-toolbar {
@@ -216,6 +221,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    button {
+      font-size: 15px;
+    }
   }
 
   .card-body {
@@ -225,5 +234,23 @@
       margin-bottom: 0;
       padding-left: 30px;
     }
+  }
+}
+
+.list-file {
+  padding: 5px 10px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.list-file-thumb {
+  color: #777;
+  font-size: 20px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  h6 {
+    margin-left: 10px;
   }
 }

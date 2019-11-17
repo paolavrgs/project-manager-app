@@ -5,7 +5,7 @@
     Volver
 .container-fluid
   .row
-    .col-lg-4
+    .col-lg-5
       .project_card
         .project_card-header
           .project_card-label
@@ -64,7 +64,7 @@
                 Desarrolladores
         .content
           %select#js-example
-
+    
       .project_card
         .project_card-header
           .project_card-label
@@ -73,9 +73,15 @@
                 %i.fa.fa-files-o
                 Archivos
         - @project.files.each do |file|
-          %a{href:"#{rails_blob_url(file)}"} Archivos
+          .list-file
+            .list-file-thumb
+              %i.fa.fa-file-pdf-o
+              %h6
+                %a{href:"#{rails_blob_url(file)}"} filename
+            %a(href="")
+              %i.fa.fa-download
 
-    .col-lg-8
+    .col-lg-7
       .project_card
         .project_card-header
           .project_card-label

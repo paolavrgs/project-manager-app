@@ -12,6 +12,9 @@
   .field
     = f.label :level
     = f.text_field :level
+  .form-group
+    = f.label :avatar
+    = f.file_field :avatar
   .field
     = f.label :techs
     = f.collection_check_boxes(:techs, Technology::AVAILABLES, :first, :last) do |opt|
