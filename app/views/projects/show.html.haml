@@ -63,8 +63,16 @@
                 %i.fa.fa-list-ul
                 Desarrolladores
         .content
-          %select#js-example
-    
+          .row
+            - @project.developers.each do |dev|
+              .col-lg
+                .card
+                  .card-body
+                    = dev.name
+        .content
+          = form_for @project, method: :put do |form|
+            = form.select(:developer_ids, @developers.map{|dev| ["#{dev&.name} - #{dev&.level}", dev.id]}, {}, { multiple: true })
+            = form.submit
       .project_card
         .project_card-header
           .project_card-label
@@ -153,13 +161,7 @@
     })
 
     // select2
-    $('#js-example').select2({
-      data: [
-        {
-          name: 'Enmanuel'
-        }
-      ]
-    });
+    $('#project_developer_ids').select2({});
   })
 :css
   #requirements {

@@ -12,6 +12,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @requirement = @project.requirements
+    @developers = Developer.all
   end
 
   # GET /projects/new
@@ -88,7 +89,7 @@ class ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(
       :title, :description, :status, :start_date,
-      :due_date, :logo_image, files: [], techs: [],
+      :due_date, :logo_image, files: [], techs: [], developer_ids: [],
       requirements_attributes: [:id, :title, :hours, :_destroy]
     )
   end
