@@ -17,26 +17,31 @@
       .app_navbar
         %nav.navbar.app_navbar-top
           %a.navbar-brand{href: "#"} APP
-          %form.form-inline.my-2.my-lg-0
-            .input-group
-              %input.form-control.mr-sm-2{"aria-label" => "Search", placeholder: "Search", type: "search"}/
-              .input-group-append
-                %button.btn{type: "submit"}
-                  %i.fa.fa-search
+          - if user_signed_in?
+            %form.form-inline.my-2.my-lg-0
+              .input-group
+                %input.form-control.mr-sm-2{"aria-label" => "Search", placeholder: "Search", type: "search"}/
+                .input-group-append
+                  %button.btn{type: "submit"}
+                    %i.fa.fa-search
           %ul.navbar-nav
             %li.nav-item.active
               %a.nav-link{href: "#"}
                 %i.fa.fa-user
-        %nav.navbar.navbar-expand-lg.navbar-light
-          %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarNav", "data-toggle" => "collapse", type: "button"}
-            %span.navbar-toggler-icon
-          #navbarNav.collapse.navbar-collapse
-            %ul.navbar-nav
-              %li.nav-item
-                %a.nav-link{href: "/"} Tablero General
-              %li.nav-item
-                %a.nav-link{href: "/projects"} Proyectos
-              %li.nav-item
-                %a.nav-link{href: "/developers"} Desarrolladores
+            %li.nav-item
+              = link_to 'Log out', destroy_user_session_path, method: :delete
+        - if user_signed_in?
+          %nav.navbar.navbar-expand-lg.navbar-light
+            %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarNav", "data-toggle" => "collapse", type: "button"}
+              %span.navbar-toggler-icon
+            #navbarNav.collapse.navbar-collapse
+              %ul.navbar-nav
+                %li.nav-item
+                  %a.nav-link{href: "/"} Tablero General
+                %li.nav-item
+                  %a.nav-link{href: "/projects"} Proyectos
+                - if admin?
+                  %li.nav-item
+                    %a.nav-link{href: "/developers"} Desarrolladores
       .app_content
         = yield
