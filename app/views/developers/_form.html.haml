@@ -5,7 +5,16 @@
       %ul
         - @developer.errors.full_messages.each do |message|
           %li= message
-
+  = f.fields_for :user do |u|
+    .field
+      = u.label :email
+      = u.text_field :email
+    .field
+      = u.label :password
+      = u.text_field :password
+    .field
+      = u.label :passowrd_confirmation
+      = u.text_field :passowrd_confirmation
   .field
     = f.label :name
     = f.text_field :name

@@ -14,7 +14,8 @@ class DevelopersController < ApplicationController
 
   # GET /developers/new
   def new
-    @developer = Developer.new
+    @user = User.new
+    @developer = Developer.new(user: @user)
   end
 
   # GET /developers/1/edit
@@ -24,12 +25,13 @@ class DevelopersController < ApplicationController
   # POST /developers
   # POST /developers.json
   def create
+    # user = create_user.process(user_params)
     @developer = Developer.new(developer_params)
-
+    dev_user = create_developer_user(@developer, user_params)
     respond_to do |format|
-      if @developer.save
-        format.html { redirect_to @developer, notice: 'Developer was successfully created.' }
-        format.json { render :show, status: :created, location: @developer }
+      if dev_user.dig(:status)
+        format.html { redirect_to dev_user.dig(:developer), notice: 'Developer was successfully created.' }
+        format.json { render :show, status: :created, location: dev_user.dig(:developer) }
       else
         format.html { render :new }
         format.json { render json: @developer.errors, status: :unprocessable_entity }
@@ -70,6 +72,25 @@ class DevelopersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def developer_params
-    params.require(:developer).permit(:name, :level, :avatar, techs: [])
+    params.require(:developer).permit(:name, :level, :avatar, :user_id, techs: [])
+  end
+
+  def user_params
+    params.require(:developer).require(:user).permit(:email, :password, :password_confirmation)
+  end
+
+  # PLEASE MOVE THIS TO A SERVICE
+  def create_developer_user(developer_instance, user_params)
+    user = User.new(user_params)
+    developer_instance.transaction do
+      user.save!
+      developer_instance.user = user
+      developer_instance.save!
+      return {
+        developer: developer_instance,
+        status: true
+      }
+    end
+    {}
   end
 end

@@ -23,6 +23,13 @@ gem 'mini_magick', '4.9.5'
 gem 'image_magick', '0.1.9'
 gem 'cocoon'
 
+# Authentication
+gem 'devise'
+
+# Roles
+gem "rolify"
+
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
