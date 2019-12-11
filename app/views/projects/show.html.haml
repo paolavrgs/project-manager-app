@@ -102,33 +102,26 @@
         #requirementsAccordion.accordion
           - @project.requirements.each_with_index do |req, x|
             .card
-              - if req.tasks.empty?
-                .card-header
-                  %button.btn.btn-link
+              .card-header{"aria-controls" => "collapse-#{req.id}", "aria-expanded" => "#{ x == 0 ? "true" : "false"}", "data-target" => "#collapse-#{req.id}", "data-toggle" => "collapse"}
+                %button.btn.btn-link
+                  - if req.tasks.empty?
                     %input.styled-checkbox{id: "req-#{req.id}", type: "checkbox"}
                     %label{ for: "req-#{req.id}"}= req.title
-                  .card-header-actions
-                    = link_to edit_requirement_path(req) do
-                      %i.fa.fa-pencil
-                    = link_to req, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
-                      %i.fa.fa-trash
-              - else
-                .card-header{"aria-controls" => "collapse-#{req.id}", "aria-expanded" => "#{ x == 0 ? "true" : "false"}", "data-target" => "#collapse-#{req.id}", "data-toggle" => "collapse"}
-                  %button.btn.btn-link
+                  - else
                     = req.title
-                  .card-header-actions
-                    = link_to edit_requirement_path(req) do
-                      %i.fa.fa-pencil
-                    = link_to req, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
-                      %i.fa.fa-trash
-                .collapse{class: "#{ x == 0 ? "show" : ""}", "data-parent" => "#requirementsAccordion", id: "collapse-#{req.id}"}
-                  .card-body
-                    %ul.task-list{'data-req' => req.id}
-                      - req.tasks.by_created_at.each do |task|
-                        = render partial: 'task', locals: {task: task}
-                      %li
-                    .form-group
-                      %input#create-task-input.form-control{type: "text", 'data-req' => req.id}/
+                .card-header-actions
+                  = link_to edit_requirement_path(req) do
+                    %i.fa.fa-pencil
+                  = link_to req, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
+                    %i.fa.fa-trash
+              .collapse{class: "#{ x == 0 ? "show" : ""}", "data-parent" => "#requirementsAccordion", id: "collapse-#{req.id}"}
+                .card-body
+                  %ul.task-list{'data-req' => req.id}
+                    - req.tasks.by_created_at.each do |task|
+                      = render partial: 'task', locals: {task: task}
+                    %li
+                  .form-group
+                    %input#create-task-input.form-control{type: "text", 'data-req' => req.id}/
         = form_for @project do |f|
           #requirements
             = f.fields_for :requirements, @project.requirements.new do |requirement|

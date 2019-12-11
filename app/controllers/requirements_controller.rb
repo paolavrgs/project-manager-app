@@ -43,7 +43,7 @@ class RequirementsController < ApplicationController
   def update
     respond_to do |format|
       if @requirement.update(requirement_params)
-        format.html { redirect_to @requirement, notice: 'Requirement was successfully updated.' }
+        format.html { redirect_to @requirement.project, notice: 'Requirement was successfully updated.' }
         format.json { render :show, status: :ok, location: @requirement }
       else
         format.html { render :edit }
