@@ -73,7 +73,7 @@
                     = dev.name
         .content
           = form_for @project, method: :put do |form|
-            = form.select(:developer_ids, @developers.map{|dev| ["#{dev&.name} - #{dev&.level}", dev.id]}, {}, { multiple: true })
+            = form.select(:developer_ids, @developers.map{|dev| ["#{dev&.name} - #{dev&.level} - Disponibilidad: #{dev&.progress}%", dev.id]}, {}, { multiple: true })
             = form.submit
       .project_card
         .project_card-header
@@ -106,10 +106,6 @@
             .card
               .card-header{"aria-controls" => "collapse-#{req.id}", "aria-expanded" => "#{ x == 0 ? "true" : "false"}", "data-target" => "#collapse-#{req.id}", "data-toggle" => "collapse"}
                 %button.btn.btn-link
-                  -# - if req.tasks.empty?
-                  -#   %input.styled-checkbox{id: "req-#{req.id}", type: "checkbox"}
-                  -#   %label{ for: "req-#{req.id}"}= req.title
-                  -# - else
                   = req.title
                 .card-header-actions
                   = link_to edit_requirement_path(req) do
@@ -123,7 +119,7 @@
                       = render partial: 'task', locals: {task: task}
                     %li
                   .form-group
-                    %input#create-task-input.form-control{type: "text", 'data-req' => req.id}/
+                    %input.create-task-input.form-control{type: "text", 'data-req' => req.id}/
         = form_for @project do |f|
           #requirements
             = f.fields_for :requirements, @project.requirements.new do |requirement|
@@ -146,7 +142,7 @@
         $("#open").css('display','block');
     });
 
-    $("#create-task-input").keypress(function(event) {
+    $(".create-task-input").keypress(function(event) {
       createTask(event);
     });
 
@@ -175,6 +171,7 @@
     }
 
     function createTask(event) {
+        console.log('event.which: ', event.which)
       if (event.which == 13) {
         event.preventDefault();
         let target = event.target;

@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @requirement = @project.requirements
-    @developers = Developer.all
+    @developers = Developer.by_availability
   end
 
   # GET /projects/new
