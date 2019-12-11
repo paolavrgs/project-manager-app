@@ -102,46 +102,37 @@
         #requirementsAccordion.accordion
           - @project.requirements.each_with_index do |req, x|
             .card
-              - if req.tasks.empty?
-                .card-header
-                  %button.btn.btn-link
-                    %input#req-1.styled-checkbox{type: "checkbox"}
-                    %label{ for: "req-1"}= req.title
-                  .card-header-actions
-                    = link_to edit_requirement_path(req) do
-                      %i.fa.fa-pencil
-                    = link_to req, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
-                      %i.fa.fa-trash
-              - else
-                .card-header{"aria-controls" => "collapse-#{req.id}", "aria-expanded" => "#{ x == 0 ? "true" : "false"}", "data-target" => "#collapse-#{req.id}", "data-toggle" => "collapse"}
-                  %button.btn.btn-link
+              .card-header{"aria-controls" => "collapse-#{req.id}", "aria-expanded" => "#{ x == 0 ? "true" : "false"}", "data-target" => "#collapse-#{req.id}", "data-toggle" => "collapse"}
+                %button.btn.btn-link
+                  - if req.tasks.empty?
+                    %input.styled-checkbox{id: "req-#{req.id}", type: "checkbox"}
+                    %label{ for: "req-#{req.id}"}= req.title
+                  - else
                     = req.title
-                  .card-header-actions
-                    = link_to edit_requirement_path(req) do
-                      %i.fa.fa-pencil
-                    = link_to req, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
-                      %i.fa.fa-trash
+                .card-header-actions
+                  = link_to edit_requirement_path(req) do
+                    %i.fa.fa-pencil
+                  = link_to req, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
+                    %i.fa.fa-trash
               .collapse{class: "#{ x == 0 ? "show" : ""}", "data-parent" => "#requirementsAccordion", id: "collapse-#{req.id}"}
                 .card-body
-                  %ul
-                    - req.tasks.each do |task|
-                      %li.d-flex.justify-content-between
-                        .task-title
-                          %input#task-1.styled-checkbox{type: "checkbox"}
-                          %label{ for: "task-1"}= task.title
-                        .task-priority
-                          %span.badge.badge_custom.red BAJA
-
-
+                  %ul.task-list{'data-req' => req.id}
+                    - req.tasks.by_created_at.each do |task|
+                      = render partial: 'task', locals: {task: task}
+                    %li
+                  .form-group
+                    %input#create-task-input.form-control{type: "text", 'data-req' => req.id}/
         = form_for @project do |f|
           #requirements
-            = f.fields_for :requirements do |requirement|
+            = f.fields_for :requirements, @project.requirements.new do |requirement|
               = render 'requirement_fields', f: requirement
             .links
               = link_to_add_association 'add requirement', f, :requirements
             = f.submit
+
 :javascript
   $(document).ready(function() {
+
     $("#open").click(function () {
         $("#requirements").show("slow");
         $("#open").css('display','none');
@@ -153,6 +144,10 @@
         $("#open").css('display','block');
     });
 
+    $("#create-task-input").keypress(function(event) {
+      createTask(event);
+    });
+
     // Submit form when dropdown option is clicked
     $('.change-state').click(function (e) {
       let formId = e.target.getAttribute('data-form');
@@ -162,7 +157,73 @@
 
     // select2
     $('#project_developer_ids').select2({});
-  })
+
+    function taskTemplate(id, title){
+      return `
+        <li class="d-flex justify-content-between">
+          <div class="task-title">
+            <input class="task-checkbox styled-checkbox" id="task-${id}" type="checkbox">
+            <label for="task-${id}">${title}</label>
+          </div>
+          <div class="task-priority">
+            <span class="badge badge_custom red">BAJA</span>
+          </div>
+        </li>
+      `
+    }
+
+    function createTask(event) {
+      if (event.which == 13) {
+        event.preventDefault();
+        let target = event.target;
+        let title = target.value;
+        let reqId = target.dataset.req
+        let task = {
+          task: {
+            title,
+            requirement_id: reqId
+          }
+        }
+        fetch('/tasks', {
+          method: 'post',
+          body: JSON.stringify(task),
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': Rails.csrfToken()
+          },
+          credentials: 'same-origin'
+        }).then(function(response) {
+          return response.json();
+        }).then(function(data) {
+          console.log('data: ', data);
+          // add task to list
+          $(`.task-list[data-req=${reqId}]`).append(taskTemplate(data.id, data.title));
+
+          // Clean input
+          event.target.value = '';
+        }).catch(function(error) {
+          alert('Error: ', error);
+        });
+      }
+    }
+
+    $(".task-checkbox").change(function(e) {
+      let isChecked = e.target.checked;
+      let taskId = e.target.id.split('-')[1];
+      Rails.ajax({
+        url: `/tasks/${taskId}`,
+        type: "PUT",
+        data: `task[status=${isChecked}`,
+        success: function(data) {
+          console.log('data success: ', data);
+        },
+        error: function(data) {
+          console.log('data error: ', data)
+        }
+      });
+    });
+  });
+
 :css
   #requirements {
     display: none;
