@@ -1,0 +1,6 @@
+%li.d-flex.justify-content-between
+  .task-title
+    %input.task-checkbox.styled-checkbox{id: "task-#{task.id}", type: "checkbox", checked: task.status}
+    %label{ for: "task-#{task.id}"}= task.title
+  .task-priority
+    %span.badge.badge_custom.red BAJA
