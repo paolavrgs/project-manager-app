@@ -11,6 +11,12 @@ class Project < ApplicationRecord
     aasm.states(permitted: true).map(&:name)
   end
 
+  def tasks
+    reqs = requirements.pluck(:id)
+    tasks = Task.where(requirement_id: reqs)
+    tasks
+  end
+
   aasm column: 'status' do
     state :planning, initial: true
     state :doing, :done, :iqc, :verify_client, :freeze
