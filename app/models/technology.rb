@@ -1,8 +1,9 @@
 class Technology
   AVAILABLES = {
     rails: 'Ruby on Rails',
-    node: 'Node JS',
     php: 'PHP',
+    wordpress: 'Wordpress',
+    node: 'Node JS',
     javacript: 'Javascript',
     android: 'Android'
   }.freeze

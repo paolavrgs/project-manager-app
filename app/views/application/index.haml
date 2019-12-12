@@ -2,40 +2,49 @@
   %h4 Tablero General
 .container-fluid
   .row
-    .col-lg-3
+    .col-lg-6
       .project_card
         .project_card-header
-          .project_card-title Progress circle
+          .project_card-title Cantidad de proyectos
         .project_card-body
-          .progress-circle.mx-auto{"data-value" => "25"}
-            %span.progress-left
-              %span.progress-bar.border-danger
-            %span.progress-right
-              %span.progress-bar.border-danger
-            .progress-value.w-100.h-100.rounded-circle.d-flex.align-items-center.justify-content-center
-              .h2.font-weight-bold
-                25
-                %sup.small %
-    .col-lg-4
+          %ul.list-group
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.red Freeze
+              = Project.is_state('freeze').size.to_s + ' proyectos'
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.yellow Planning
+              = Project.is_state('planning').size.to_s + ' proyectos'
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.blue Doing
+              = Project.is_state('doing').size.to_s + ' proyectos'
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.blue IQC
+              = Project.is_state('iqc').size.to_s + ' proyectos'
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.blue Verify Client
+              = Project.is_state('verify_client').size.to_s + ' proyectos'
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.green Done
+              = Project.is_state('done').size.to_s + ' proyectos'
+    .col-lg-6
       .project_card
         .project_card-header
-          .project_card-title Rendimiento de Desarrolladores
+          .project_card-title Disponibilidad de Desarrolladores
         .project_card-body
           %ul.list-group.mb-0
             - @developers.each do |dev|
-              - task_progress = 0
-              - task_progress = ((dev.tasks.completed.size.to_f / dev.tasks.size.to_f) * 100).round unless dev.tasks.count.zero?
               %li.list-group-item
                 .clearfix
                   .float-left
                     %strong
-                      = task_progress.to_s + '%'
+                      = dev.progress.to_s + '%'
+                    %strong
+                      |
+                    = dev.tasks.size.to_s + ' tareas'
+                    %strong
+                      |
+                    = dev.tasks.completed.size.to_s + ' tareas completadas'
                   .float-right
                     %small.text-muted= dev.name
                 .progress.progress-xs{style: "height: 5px;"}
-                  .progress-bar.bg-azure{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => task_progress, role: "progressbar", style: "width: #{task_progress}%"}
-    .col-lg-4
-      .project_card
-        .project_card-header
-          .project_card-title Otro card
-        .project_card-body
+                  .progress-bar.bg-azure{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => dev.progress, role: "progressbar", style: "width: #{dev.progress}%"}

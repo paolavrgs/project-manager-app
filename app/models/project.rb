@@ -7,6 +7,9 @@ class Project < ApplicationRecord
   accepts_nested_attributes_for :requirements, reject_if: :all_blank, allow_destroy: true
   has_and_belongs_to_many :developers
 
+  scope :is_state, ->(stt) { where(status: stt) }
+  scope :is_dev_here, ->(dev_id) { joins(:developers).where('developers.id' => dev_id) }
+
   def possible_transitions
     aasm.states(permitted: true).map(&:name)
   end
