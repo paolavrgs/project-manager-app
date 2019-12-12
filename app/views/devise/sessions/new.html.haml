@@ -1,0 +1,16 @@
+.container
+  .row
+    .col-lg-6.offset-lg-3
+      .login-box
+        .login-box-header
+          %img{ src: 'https://keenthemes.com/metronic/themes/metronic/theme/default/demo7/dist/assets/media/logos/logo-5.png', alt: '' }
+          %h2 Inicia sesión
+        .login-box-form
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            .form-group
+              = f.email_field :email, autofocus: true, placeholder: 'Correo electrónico', class: 'form-control'
+            .form-group
+              = f.password_field :password, placeholder: 'Contraseña', class: 'form-control'
+            %button.btn.btn-custom{type:'submit'} Entrar
+        .login-box-shared
+          = render "devise/shared/links"

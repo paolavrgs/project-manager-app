@@ -16,7 +16,7 @@
     %section.wrapper_app
       .app_navbar
         %nav.navbar.app_navbar-top
-          %a.navbar-brand{href: "#"} APP
+          %a.navbar-brand{href: "/"} APP
           - if user_signed_in?
             %form.form-inline.my-2.my-lg-0
               .input-group
@@ -25,11 +25,11 @@
                   %button.btn{type: "submit"}
                     %i.fa.fa-search
           %ul.navbar-nav
-            %li.nav-item.active
-              %a.nav-link{href: "#"}
-                %i.fa.fa-user
-            %li.nav-item
-              = link_to 'Log out', destroy_user_session_path, method: :delete
+            - if user_signed_in?
+              %li.nav-item.active
+                = link_to destroy_user_session_path, method: :delete do
+                  Cerrar sesion
+                  %i.fa.fa-power-off
         - if user_signed_in?
           %nav.navbar.navbar-expand-lg.navbar-light
             %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarNav", "data-toggle" => "collapse", type: "button"}
