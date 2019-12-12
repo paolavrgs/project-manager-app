@@ -9,6 +9,10 @@
   align-items: center;
   flex-direction: column;
   margin: 15vh auto;
+
+  img {
+    width: 100px;
+  }
 }
 
 .login-box-form, .login-box-header, .login-box-shared {

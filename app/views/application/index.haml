@@ -2,24 +2,34 @@
   %h4 Tablero General
 .container-fluid
   .row
-    .col-lg-3
+    .col-lg-6
       .project_card
         .project_card-header
-          .project_card-title Progress circle
+          .project_card-title Cantidad de proyectos
         .project_card-body
-          .progress-circle.mx-auto{"data-value" => "25"}
-            %span.progress-left
-              %span.progress-bar.border-danger
-            %span.progress-right
-              %span.progress-bar.border-danger
-            .progress-value.w-100.h-100.rounded-circle.d-flex.align-items-center.justify-content-center
-              .h2.font-weight-bold
-                25
-                %sup.small %
-    .col-lg-4
+          %ul.list-group
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.red Freeze
+              2 proyectos
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.yellow Planning
+              2 proyectos
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.blue Doing
+              2 proyectos
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.blue IQC
+              2 proyectos
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.blue Verify Client
+              2 proyectos
+            %li.list-group-item.d-flex.justify-content-between
+              %span.badge.badge_custom.green Done
+              2 proyectos
+    .col-lg-6
       .project_card
         .project_card-header
-          .project_card-title Rendimiento de Desarrolladores
+          .project_card-title Disponibilidad de Desarrolladores
         .project_card-body
           %ul.list-group.mb-0
             - @developers.each do |dev|
@@ -34,8 +44,3 @@
                     %small.text-muted= dev.name
                 .progress.progress-xs{style: "height: 5px;"}
                   .progress-bar.bg-azure{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => task_progress, role: "progressbar", style: "width: #{task_progress}%"}
-    .col-lg-4
-      .project_card
-        .project_card-header
-          .project_card-title Otro card
-        .project_card-body

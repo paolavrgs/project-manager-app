@@ -1,2 +1,4 @@
-= link_to 'Back', projects_path
+= link_to projects_path do
+    %i.fa.fa-chevron-left
+    Volver
 = render 'form', project: @project

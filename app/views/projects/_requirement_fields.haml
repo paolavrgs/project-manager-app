@@ -1,8 +1,12 @@
 .nested-fields
-  .form-group
-    = f.label :title
-    = f.text_field :title, class: 'form-control'
-    = f.label :hours
-    = f.text_field :hours, class: 'form-control'
-    = f.check_box :status
-    = link_to_remove_association "remove task", f
+  .row
+    .col-lg-6
+      .form-group
+        = f.label 'Requerimiento'
+        = f.text_field :title, class: 'form-control'
+    .col-lg-6
+      .form-group
+        = f.label 'Horas estimadas'
+        = f.text_field :hours, class: 'form-control'
+    -# = f.check_box :status
+    -# = link_to_remove_association "remove task", f

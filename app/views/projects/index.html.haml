@@ -38,10 +38,10 @@
               .body-item
                 %span.body-item-span Desarrolladores
                 .members-avatar
-                  .avatar-img{ "data-toggle"=>"tooltip", "data-placement"=>"bottom", title: "John Doe" }
-                    %img{ src: 'http://dashboards.webkom.co/jquery/sumea/assets/img/avatars/46.jpg' }
-                  .avatar-img{ "data-toggle"=>"tooltip", "data-placement"=>"bottom", title: "Jane Doe" }
-                    %img{ src: 'http://dashboards.webkom.co/jquery/sumea/assets/img/avatars/16.jpg' }
+                  - project.developers.each do |dev|
+                    = link_to dev do
+                      .avatar-img{ "data-toggle"=>"tooltip", "data-placement"=>"bottom", title: dev.name }
+                        = image_tag(dev.avatar) if dev.avatar.attached?
                 
           .project_card-footer
             .flex-fill

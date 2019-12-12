@@ -1,34 +1,39 @@
-= form_for @developer do |f|
-  - if @developer.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@developer.errors.count, "error")} prohibited this developer from being saved:"
-      %ul
-        - @developer.errors.full_messages.each do |message|
-          %li= message
-  = f.fields_for :user do |u|
-    .field
-      = u.label :email
-      = u.text_field :email
-    .field
-      = u.label :password
-      = u.text_field :password
-    .field
-      = u.label :passowrd_confirmation
-      = u.text_field :passowrd_confirmation
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :level
-    = f.text_field :level
-  .form-group
-    = f.label :avatar
-    = f.file_field :avatar
-  .field
-    = f.label :techs
-    = f.collection_check_boxes(:techs, Technology::AVAILABLES, :first, :last) do |opt|
-      .form-check.form-check-inline
-        = opt.check_box class: 'form-check-input', checked: f.object.techs.include?(opt.object&.first&.to_s)
-        = opt.label class: 'form-check-label'
-  .actions
-    = f.submit 'Save'
+.container
+  .row
+    .col-lg-12
+      .project_card
+        = form_for @developer do |f|
+          - if @developer.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@developer.errors.count, "error")} prohibited this developer from being saved:"
+              %ul
+                - @developer.errors.full_messages.each do |message|
+                  %li= message
+          = f.fields_for :user do |u|
+            .form-group
+              = u.label :email
+              = u.text_field :email, class: 'form-control', type: 'email'
+            .form-group
+              = u.label :password
+              = u.text_field :password, class: 'form-control', type: 'password'
+            .form-group
+              = u.label :passowrd_confirmation
+              = u.text_field :passowrd_confirmation, class: 'form-control', type: 'password'
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control'
+          .form-group
+            = f.label :level
+            = f.text_field :level, class: 'form-control'
+          .form-group
+            = f.label :avatar
+            = f.file_field :avatar, class: 'form-control'
+          .form-group
+            = f.label :techs
+            %br/
+            = f.collection_check_boxes(:techs, Technology::AVAILABLES, :first, :last) do |opt|
+              .form-check.form-check-inline
+                = opt.check_box class: 'styled-checkbox form-check-input', checked: f.object.techs.include?(opt.object&.first&.to_s)
+                = opt.label class: 'form-check-label'
+          .actions
+            = f.submit 'Crear desarrollador', class: 'btn btn-custom btn-sm'

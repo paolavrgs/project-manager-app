@@ -1,15 +1,38 @@
 %p#notice= notice
-
-%p
-  %b Name:
-  = @developer.name
-%p
-  %b Level:
-  = @developer.level
-%p
-  %b Techs:
-  = @developer.techs
-
-= link_to 'Edit', edit_developer_path(@developer)
-\|
-= link_to 'Back', developers_path
+.app_content-header
+  = link_to developers_path do
+    %i.fa.fa-chevron-left
+    Volver
+.container-fluid
+  .row
+    .col-lg-6.offset-lg-3
+      .project_card
+        .project_card-header
+          .project_card-label
+            .project_card-media
+              %span.media-circle
+                = image_tag(@developer.avatar) if @developer.avatar.attached?
+            .project_card-info
+              .project_card-title
+                = @developer.name
+              %span
+                = @developer.user.email
+              %span
+                Desarrollador
+                %span.badge.badge_custom= @developer.level
+          .project_card-actions
+            = link_to edit_developer_path(@developer) do
+              %i.fa.fa-pencil
+            = link_to @developer, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
+              %i.fa.fa-trash
+        .project_card-body
+          .mb-3
+            - @developer.techs.each do |tech|
+              %span.badge.badge-primary= tech
+          %strong Proyectos:
+          %ul.list-projects.mt-3
+            - @developer.projects.each do |project|
+              %li
+                = image_tag(project.logo_image) if project.logo_image.attached?
+                = link_to project do
+                  = project.title

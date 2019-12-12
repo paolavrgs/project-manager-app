@@ -1,20 +1,18 @@
-= form_with(model: task, local: true) do |form|
-  - if task.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(task.errors.count, "error")
-        prohibited this task from being saved:
-      %ul
-        - task.errors.full_messages.each do |message|
-          %li= message
-  .field
-    = form.label :title
-    = form.text_field :title
-  .field
-    = form.label :priority
-    = form.text_field :priority
-  .field
-    = form.label :description
-    = form.text_field :description
-  .actions
-    = form.submit
+.container
+  .row
+    .col-lg-12
+      .project_card
+        = form_with(model: task, local: true) do |form|
+          - if task.errors.any?
+            #error_explanation
+              %h2
+                = pluralize(task.errors.count, "error")
+                prohibited this task from being saved:
+              %ul
+                - task.errors.full_messages.each do |message|
+                  %li= message
+          .form-group
+            = form.label 'Tarea'
+            = form.text_field :title, class: 'form-control'
+          .actions
+            = form.submit 'Actualizar tarea', class: 'btn btn-custom btn-sm'

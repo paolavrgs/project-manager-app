@@ -11,30 +11,40 @@
               %ul
                 - project.errors.full_messages.each do |message|
                   %li= message
-          .form-group
-            = form.label :title
-            = form.text_field :title, class: 'form-control'
-          .form-group
-            = form.label :description
-            = form.text_field :description, class: 'form-control'
-          .form-group
-            = form.label :techs
-            = form.collection_check_boxes(:techs, Technology::AVAILABLES, :first, :last) do |opt|
-              .form-check.form-check-inline
-                = opt.check_box class: 'form-check-input', checked: project.techs.include?(opt.object&.first&.to_s)
-                = opt.label class: 'form-check-label'
-
-          .form-group
-            = form.label :start_date
-            = form.date_field :start_date, class: 'form-control'
-          .form-group
-            = form.label :due_date
-            = form.date_field :due_date, class: 'form-control'
-          .form-group
-            = form.label :logo_image
-            = form.file_field :logo_image
-          .form-group
-            = form.label :files
-            = form.file_field :files, multiple: true
-          .actions
-            = form.submit 'Crear proyecto', class: 'btn btn-custom btn-sm'
+          .row
+            .col-lg-6
+              .form-group
+                = form.label 'Titulo'
+                = form.text_field :title, class: 'form-control'
+            .col-lg-6
+              .form-group
+                = form.label 'Descripción del proyecto'
+                = form.text_area :description, class: 'form-control'
+            .col-lg-12
+              .form-group
+                = form.label 'Tecnologías'
+                %br/
+                = form.collection_check_boxes(:techs, Technology::AVAILABLES, :first, :last) do |opt|
+                  .form-check.form-check-inline
+                    = opt.check_box class: 'styled-checkbox form-check-input', checked: project.techs.include?(opt.object&.first&.to_s)
+                    = opt.label class: 'form-check-label'
+          .row
+            .col-lg-6
+              .form-group
+                = form.label 'Fecha de inicio'
+                = form.date_field :start_date, class: 'form-control'
+            .col-lg-6
+              .form-group
+                = form.label 'Fecha de fin'
+                = form.date_field :due_date, class: 'form-control'
+            .col-lg-6
+              .form-group
+                = form.label 'Logo'
+                = form.file_field :logo_image
+            .col-lg-6
+              .form-group
+                = form.label 'Subir archivos'
+                = form.file_field :files, multiple: true
+            .col-lg-12
+              .actions
+                = form.submit 'Crear proyecto', class: 'btn btn-custom btn-sm'

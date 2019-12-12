@@ -80,6 +80,7 @@
     width: 65px;
     height: 65px;
     border-radius: 50%;
+    object-fit: contain;
   }
 }
 
@@ -252,5 +253,13 @@
   display: flex;
   h6 {
     margin-left: 10px;
+  }
+}
+
+.list-projects {
+  padding-left: 0;
+  img {
+    width: 80px;
+    margin-right: 20px;
   }
 }

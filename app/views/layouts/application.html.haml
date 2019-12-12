@@ -16,14 +16,9 @@
     %section.wrapper_app
       .app_navbar
         %nav.navbar.app_navbar-top
-          %a.navbar-brand{href: "/"} APP
           - if user_signed_in?
-            %form.form-inline.my-2.my-lg-0
-              .input-group
-                %input.form-control.mr-sm-2{"aria-label" => "Search", placeholder: "Search", type: "search"}/
-                .input-group-append
-                  %button.btn{type: "submit"}
-                    %i.fa.fa-search
+            %a.navbar-brand{href: "/"}
+              %img{ src: '/assets/logo_slice_negro.png', alt: '' }
           %ul.navbar-nav
             - if user_signed_in?
               %li.nav-item.active
