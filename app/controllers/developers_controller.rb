@@ -9,8 +9,7 @@ class DevelopersController < ApplicationController
 
   # GET /developers/1
   # GET /developers/1.json
-  def show
-  end
+  def show; end
 
   # GET /developers/new
   def new
@@ -19,13 +18,11 @@ class DevelopersController < ApplicationController
   end
 
   # GET /developers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /developers
   # POST /developers.json
   def create
-    # user = create_user.process(user_params)
     @developer = Developer.new(developer_params)
     dev_user = create_developer_user(@developer, user_params)
     respond_to do |format|
@@ -83,6 +80,7 @@ class DevelopersController < ApplicationController
   def create_developer_user(developer_instance, user_params)
     user = User.new(user_params)
     developer_instance.transaction do
+      user.add_role(:developer)
       user.save!
       developer_instance.user = user
       developer_instance.save!

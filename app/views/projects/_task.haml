@@ -3,7 +3,6 @@
     %input.task-checkbox.styled-checkbox{id: "task-#{task.id}", type: "checkbox", checked: task.status}
     %label{ for: "task-#{task.id}"}= task.title
   .task-priority
-    %span.badge.badge_custom.red BAJA
     = link_to edit_task_path(task) do
       %i.fa.fa-pencil
     = link_to task, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do

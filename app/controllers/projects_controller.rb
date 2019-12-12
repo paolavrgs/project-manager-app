@@ -5,7 +5,13 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    if current_user.has_role? :admin
+      @projects = Project.all
+    elsif current_user.has_role? :developer
+      @projects = Project.is_dev_here(current_user.developer.id)
+    else
+      @projects = []
+    end
   end
 
   # GET /projects/1

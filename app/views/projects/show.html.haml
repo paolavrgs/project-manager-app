@@ -107,7 +107,7 @@
             .card
               .card-header{"aria-controls" => "collapse-#{req.id}", "aria-expanded" => "#{ x == 0 ? "true" : "false"}", "data-target" => "#collapse-#{req.id}", "data-toggle" => "collapse"}
                 %button.btn.btn-link
-                  = req.title
+                  = req.title + ' - (' + req.hours.to_s + ' horas)'
                 .card-header-actions
                   = link_to edit_requirement_path(req) do
                     %i.fa.fa-pencil
