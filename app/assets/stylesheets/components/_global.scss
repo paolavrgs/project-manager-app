@@ -108,25 +108,25 @@ li {
   border: 1px solid;
   font-weight: 400;
 
-  &.green { //DONE
+  &.green , &.done { //DONE
     background: transparent;
     border-color: #22af46;
     color: #22af46;
   }
 
-  &.yellow { //PLANNING - MEDIA PRIORIDA
+  &.yellow, &.planning { //PLANNING - MEDIA PRIORIDA
     background: transparent;
     border-color: #f3ad06;
     color: #f3ad06;
   }
 
-  &.blue { //DOING, IQC, VERIFY-CLIENT - BAJA PRIORIDAD
+  &.blue, &.doing, &.iqc, &.verify_client { //DOING, IQC, VERIFY-CLIENT - BAJA PRIORIDAD
     background: transparent;
     border-color: #01b2c6;
     color: #01b2c6;
   }
 
-  &.red { //FREEZE - ALTA PRIORIDAD
+  &.red, &.freeze { //FREEZE - ALTA PRIORIDAD
     background: transparent;
     border-color: #de4848;
     color: #de4848;

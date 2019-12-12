@@ -9,10 +9,16 @@
         .project_card
           .project_card-header
             .project_card-label
+              .project_card-media
+                %span.media-circle
+                  - if project.logo_image.attached?
+                    = image_tag(project.logo_image)
+                  - else
+                    %img(src="/assets/logo_default.png" alt="")/
               .project_card-info
                 = link_to project, class: 'project_card-title' do
                   = project.title
-                %span.badge.badge_custom.red= project.status
+                %span.badge.badge_custom{class: project.status }= project.status
             .project_card-toolbar
               %a.btn.btn-clean.btn-sm.btn-icon.btn-icon-md{"data-toggle" => "dropdown", href: "#"}
                 %i.fa.fa-ellipsis-h
@@ -23,7 +29,7 @@
                       %i.fa.fa-pencil
                       %span Editar
                   %li
-                    = link_to project, method: :delete, data: { confirm: 'Are you sure?' } do
+                    = link_to project, method: :delete, data: { confirm: 'Estás seguro?' } do
                       %i.fa.fa-trash
                       %span Eliminar
           .project_card-body
@@ -37,18 +43,22 @@
                 .body-label.due-date
                   %span= project.due_date.strftime('%d %b, %y')
               .body-item
-                %span.body-item-span Desarrolladores
-                .members-avatar
-                  - project.developers.each do |dev|
-                    = link_to dev do
-                      .avatar-img{ "data-toggle"=>"tooltip", "data-placement"=>"bottom", title: dev.name }
-                        = image_tag(dev.avatar) if dev.avatar.attached?
+                - if project.developers.any?
+                  %span.body-item-span Desarrolladores
+                  .members-avatar
+                    - project.developers.each do |dev|
+                      = link_to dev do
+                        .avatar-img{ "data-toggle"=>"tooltip", "data-placement"=>"bottom", title: dev.name }
+                          - if dev.avatar.attached?
+                            = image_tag(dev.avatar)
+                          - else
+                            %img(src="/assets/avatar_default.webp" alt="")/
                 
           .project_card-footer
             .flex-fill
               - task_progress = 0
               - task_progress = ((project.tasks.completed.size.to_f / project.tasks.size.to_f) * 100).round unless project.tasks.count.zero?
-              %span Progress
+              %span Progreso
               .d-flex.align-items-center
                 .progress{style: "height: 5px;width: 100%;"}
                   .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => task_progress, role: "progressbar", style: "width: #{task_progress}%;"}

@@ -13,7 +13,7 @@
   - @requirement.tasks.each do |task|
     %li
       = link_to task.title, task
-      = link_to task, method: :delete, data: { confirm: 'Are you sure?' } do
+      = link_to task, method: :delete, data: { confirm: 'Estás seguro?' } do
         %i.fa.fa-trash
 = form_for @requirement do |f|
   #tasks

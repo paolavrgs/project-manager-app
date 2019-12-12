@@ -11,7 +11,10 @@
           .project_card-label
             .project_card-media
               %span.media-circle
-                = image_tag(@developer.avatar) if @developer.avatar.attached?
+                - if @developer.avatar.attached?
+                  = image_tag(@developer.avatar)
+                - else
+                  %img(src="/assets/avatar_default.webp" alt="")/
             .project_card-info
               .project_card-title
                 = @developer.name
@@ -25,6 +28,14 @@
               %i.fa.fa-pencil
             = link_to @developer, method: :delete, data: { confirm: '¿Seguro que desea eliminar?' } do
               %i.fa.fa-trash
+        .project_card-footer
+          .flex-fill
+            %span Disponibilidad
+            .d-flex.align-items-center
+              .progress{style: "height: 5px;width: 100%;"}
+                .progress-bar{"aria-valuemax" => @developer.progress, "aria-valuemin" => "0", "aria-valuenow" => @developer.progress, role: "progressbar", style: "width: #{@developer.progress}%;"}
+              %span
+                = @developer.progress.to_s + '%'
         .project_card-body
           .mb-3
             - @developer.techs.each do |tech|
