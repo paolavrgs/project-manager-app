@@ -29,11 +29,11 @@ class Project < ApplicationRecord
     end
 
     event :to_planning do
-      transitions from: %i[freeze doing], to: :planning
+      transitions from: %i[freeze doing done], to: :planning
     end
 
     event :to_doing do
-      transitions from: %i[freeze planning iqc verify_client], to: :doing
+      transitions from: %i[freeze planning iqc verify_client done], to: :doing
     end
 
     event :to_done do
@@ -41,7 +41,7 @@ class Project < ApplicationRecord
     end
 
     event :to_iqc do
-      transitions from: %i[planning doing], to: :iqc
+      transitions from: %i[planning doing done], to: :iqc
     end
 
     event :to_verify_client do

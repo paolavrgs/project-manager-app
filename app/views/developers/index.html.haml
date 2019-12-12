@@ -10,7 +10,10 @@
             .project_card-label
               .project_card-media
                 %span.media-circle
-                  = image_tag(dev.avatar) if dev.avatar.attached?
+                  - if dev.avatar.attached?
+                    = image_tag(dev.avatar)
+                  - else
+                    %img(src="/assets/avatar_default.webp" alt="")/
               .project_card-info
                 = link_to dev, class: 'project_card-title' do
                   = dev.name
@@ -25,7 +28,7 @@
                       %i.fa.fa-pencil
                       %span Editar
                   %li
-                    = link_to dev, method: :delete, data: { confirm: 'Are you sure?' } do
+                    = link_to dev, method: :delete, data: { confirm: 'Estás seguro?' } do
                       %i.fa.fa-trash
                       %span Eliminar
           .project_card-body

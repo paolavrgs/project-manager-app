@@ -17,7 +17,7 @@
                 = @project.title
               .dropdown
                 %button#dropdownMenuButton.btn.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                  %span.badge.badge_custom.red= @project.status
+                  %span.badge.badge_custom{ class: @project.status }= @project.status
                 .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
                   - @project.possible_transitions.each do |state|
                     %a.dropdown-item.change-state{href: '#!', 'data-form' => "form#{state.capitalize}"}
@@ -120,10 +120,7 @@
                       = render partial: 'task', locals: {task: task}
                     %li
                   .form-group
-                    %span
-                      %i.fa.fa-plus
-                        Añadir tareas al requerimiento
-                    %input.create-task-input.form-control{type: "text", 'data-req' => req.id}/
+                    %input.create-task-input.form-control{type: "text", 'data-req' => req.id, placeholder: 'Añadir tarea'}/
         = form_for @project do |f|
           #requirements
             = f.fields_for :requirements, @project.requirements.new do |requirement|
@@ -168,7 +165,7 @@
 
     function taskTemplate(id, title){
       return `
-        <li class="d-flex justify-content-between">
+        <li class="d-flex justify-content-between mb-3">
           <div class="task-title">
             <input class="task-checkbox styled-checkbox" id="task-${id}" type="checkbox">
             <label for="task-${id}">${title}</label>
